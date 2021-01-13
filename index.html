@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Ubuntu">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h1>Amazing Currency Converter</h1>
+    <p>
+        Convert
+        <input type="number" id="original-currency-amount" placeholder="1"></input>
+        <!-- <input type="text" id="original-currency-unit" placeholder="original currency"></input>  -->
+        <select id="originCurrency">
+            <option value="">--Please choose an currency--</option>
+            <option value="USD">US Dollars</option>
+            <option value="EUR">Euro</option>
+            <option value="GBP">UK Pound Sterling</option>
+        </select>
+        to
+        <!-- <input type="text" id="new-currency-unit" placeholder="new currency"></input> -->
+        <select id="convertedCurrency">
+            <option value="">--Please choose an currency--</option>
+            <option value="USD">US Dollars</option>
+            <option value="EUR">Euro</option>
+            <option value="GBP">UK Pound Sterling</option>
+        </select>
+    </p>
+    <p>
+        Exchange Rate:
+        <span id="exchange-rate"></span>
+    </p>
+    <button>Exchange my money now!</button>
+    <p id="output-text">
+        Converted 💰 will appear here.
+    </p>
+    <a href="https://www.freeforexapi.com">Free Forex API</a>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
