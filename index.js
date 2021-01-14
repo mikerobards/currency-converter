@@ -18,42 +18,59 @@ button.addEventListener('click', function () {
     outputText.innerHTML = `<span><strong>Please choose different currencies!</strong></span>`;
   }
 
-  function getRate() {
-    axios.get(url)
-      .then(function (res) {
-        let rate = res.data.rates[`${orCur.value}${conCur.value}`].rate;
-        exRate.innerText = `${rate}`;
-        let conv = Math.floor(rate * parseInt(amount.value));
-        let orSym = '';
-        let conSym = '';
-        switch (orCur.value) {
-          case 'GBP':
-            orSym = "£"
-            break;
-          case 'EUR':
-            orSym = "€"
-            break;
-          case 'USD':
-            orSym = "$"
-            break;
-        }
-        switch (conCur.value) {
-          case 'GBP':
-            conSym = "£"
-            break;
-          case 'EUR':
-            conSym = "€"
-            break;
-          case 'USD':
-            conSym = "$"
-            break;
-        }
-
-        outputText.innerText = `💰 Your ${orSym}${amount.value} ${orCur.value} will currently buy you ${conSym}${conv} ${conCur.value}! 💰`;
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-  }
-  getRate();
+  fetch(url)
+    .then(handleErrors)
+    .then(parseJSON)
+    .then(convert)
+    .catch(printError)
 });
+
+function handleErrors(res) {
+  if (!res.ok) {
+    throw Error(res.status);
+  }
+  return res;
+}
+
+function parseJSON(res) {
+  return res.json()
+    .then(function (parsed) {
+      return parsed;
+    })
+}
+
+function convert(data) {
+  let rate = data.rates[`${orCur.value}${conCur.value}`].rate;
+  exRate.innerText = `${rate}`;
+  let conv = Math.floor(rate * parseInt(amount.value));
+  let orSym = '';
+  let conSym = '';
+  switch (orCur.value) {
+    case 'GBP':
+      orSym = "£"
+      break;
+    case 'EUR':
+      orSym = "€"
+      break;
+    case 'USD':
+      orSym = "$"
+      break;
+  }
+  switch (conCur.value) {
+    case 'GBP':
+      conSym = "£"
+      break;
+    case 'EUR':
+      conSym = "€"
+      break;
+    case 'USD':
+      conSym = "$"
+      break;
+  }
+
+  outputText.innerText = `💰 Your ${orSym}${amount.value} ${orCur.value} will currently buy you ${conSym}${conv} ${conCur.value}! 💰`;
+}
+
+function printError(error) {
+  console.log(error);
+}
